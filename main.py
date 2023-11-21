@@ -2,6 +2,10 @@ import datetime
 import math
 import time
 import warnings
+from Settings import settings as properties
+from Settings import need_show_sifted_figures
+from Settings import print_forecast_out
+from Settings import shift_percent
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,10 +15,6 @@ from sklearn.model_selection import train_test_split
 
 
 import util
-
-# ========== Settings ==========
-needShowSiftedFigures = False
-printForecastOut = False
 
 # ================== Подготовка данных ==================
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
@@ -27,14 +27,19 @@ plt.xlabel('Дата')
 plt.show()
 
 for column in columns:
+    settings = properties[column]
+
     df = train_data[[column]]
-    forecast_out = int(math.ceil(0.05 * len(df)))
-    if printForecastOut:
+    forecast_out = int(math.ceil(settings[shift_percent] * len(df)))
+
+    if settings[print_forecast_out]:
         print(forecast_out)
-    df = util.extendShiftedData(df, column, forecast_out)
-    if needShowSiftedFigures:
-        util.showShiftedFigure(df, column)
-    scaled_data = util.getScaledData(df)
+
+    df = util.extend_shifted_data(df, column, forecast_out)
+
+    if settings[need_show_sifted_figures]:
+        util.show_shifted_figure(df, column)
+    scaled_data = util.get_scaled_data(df)
 
     #  Выбор данных для прогнозирования
     data_to_be_predicted = scaled_data[-forecast_out:]  # data to be predicted
@@ -46,7 +51,7 @@ for column in columns:
 
     X_train, X_test, y_train, y_test = train_test_split(data_to_be_trained, shifted, test_size=0.2, random_state=42)
     print('\n=============== Выбор модели для акций: ' + column + ' ===============\n')
-    model = util.getModelWithHighAccuracy(X_train, X_test, y_train, y_test)
+    model = util.get_model_with_high_accuracy(X_train, X_test, y_train, y_test)
 
     last_date = df.index[-1]  # getting the lastdate in the dataset
     last_unix = time.mktime(

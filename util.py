@@ -1,5 +1,3 @@
-import math
-
 import numpy as np
 from matplotlib import pyplot as plt
 from pandas import DataFrame
@@ -9,12 +7,12 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
 
-def extendShiftedData(df: DataFrame, column: str, forecast_out: int):
+def extend_shifted_data(df: DataFrame, column: str, forecast_out: int):
     df['shifted'] = df[column].shift(-forecast_out)
     return df
 
 
-def showShiftedFigure(df: DataFrame, column: str):
+def show_shifted_figure(df: DataFrame, column: str):
     df.plot(y=['shifted', column], figsize=(16, 8))
     plt.title('Курс акций: ' + column)  # adding a title
     plt.xlabel('Дата')  # x label
@@ -26,13 +24,13 @@ def showShiftedFigure(df: DataFrame, column: str):
 # В машинном обучении StandardScaler (стандартный масштабатор) используется для изменения
 # размера распределения значений так, чтобы среднее значение наблюдаемых значений было равно 0, а стандартное
 # отклонение – 1
-def getScaledData(df: DataFrame):
+def get_scaled_data(df: DataFrame):
     scaler = StandardScaler()
     X = np.array(df.drop(['shifted'], axis=1))
     return scaler.fit_transform(X)
 
 
-def getModelWithHighAccuracy(X_train, X_test, y_train, y_test):
+def get_model_with_high_accuracy(X_train, X_test, y_train, y_test):
     models = {
         'Linear Regression': LinearRegression(),
         'Random Forest': RandomForestRegressor(),
