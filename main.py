@@ -66,7 +66,7 @@ for column in columns:
             util.save_to_excel(pd.DataFrame(data_to_be_trained), direct, 'data_to_be_trained.xlsx')
 
         # Получение целевых значений
-        df.dropna(inplace=True) # Remove missing values.
+        df.dropna(inplace=True)  # Remove missing values.
         shifted = np.array(df['shifted'])
 
         X_train, X_test, y_train, y_test = train_test_split(
