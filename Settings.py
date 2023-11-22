@@ -1,46 +1,93 @@
+to_process = 'to_process'
 need_show_sifted_figures = 'need_show_sifted_figures'
 print_forecast_out = 'print_forecast_out'
 shift_percent = 'shift_percent'
+save_to_excel = 'save_to_excel'
+directory = 'dir'
+test_size = 'test_size'
+random_state = 'random_state'
+
+show_all_history = False
 
 settings = {
-        'VTB': {
-            need_show_sifted_figures: False,
-            print_forecast_out: True,
-            shift_percent: .05
-        },
-        'Доллар': {
-            need_show_sifted_figures: False,
-            print_forecast_out: True,
-            shift_percent: .05
-        },
-        'Brent': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        },
-        'Gazprom': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        },
-        'Лукойл': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        },
-        'Роснефть': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        },
-        'Сбербанк': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        },
-        'Сургутнефтегаз': {
-            need_show_sifted_figures: False,
-            print_forecast_out: False,
-            shift_percent: .05
-        }
+    'VTB': {
+        to_process: True,
+        save_to_excel: True,
+        directory: 'втб/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Доллар': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'доллар/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Brent': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'brent/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Gazprom': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'газпром/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Лукойл': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'лукойл/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Роснефть': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'роснефть/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Сбербанк': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'сбербанк/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    },
+    'Сургутнефтегаз': {
+        to_process: False,
+        save_to_excel: True,
+        directory: 'сургутнефтегаз/',
+        need_show_sifted_figures: False,
+        print_forecast_out: False,
+        shift_percent: .05,
+        test_size: .2,
+        random_state: 42
+    }
 }
