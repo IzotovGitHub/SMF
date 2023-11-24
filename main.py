@@ -19,6 +19,8 @@ from Settings import settings as properties
 from Settings import shift_percent
 from Settings import test_size
 from Settings import to_process
+from Settings import show_forecast
+from Settings import save_png
 
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
@@ -32,10 +34,14 @@ if Settings.show_all_history:
 
 for column in columns:
     settings = properties[column]
+    save_picture = settings[save_png]
     direct = settings[directory]
     if settings[to_process]:
         df = train_data[[column]]
         forecast_out = int(math.ceil(settings[shift_percent] * len(df)))
+
+        if save_picture:
+            util.save_picture(df, 'Дата', direct, 'stock_price.png')
 
         if settings[print_forecast_out]:
             print(forecast_out)
@@ -50,8 +56,13 @@ for column in columns:
 
         scaled_data = util.get_scaled_data(df)
 
+        scaled_df = pd.DataFrame(scaled_data)
+
         if settings[save_to_excel]:
-            util.save_to_excel(pd.DataFrame(scaled_data), direct, 'scaled_data.xlsx')
+            util.save_to_excel(scaled_df, direct, 'scaled_data.xlsx')
+
+        if save_picture:
+            util.save_picture(scaled_df, '', direct, 'scaled_data.png')
 
         #  Выбор данных для прогнозирования
         '''
@@ -60,10 +71,6 @@ for column in columns:
         '''
         data_to_be_predicted = scaled_data[-forecast_out:]
         data_to_be_trained = scaled_data[:-forecast_out]
-
-        if settings[save_to_excel]:
-            util.save_to_excel(pd.DataFrame(data_to_be_predicted), direct, 'data_to_be_predicted.xlsx')
-            util.save_to_excel(pd.DataFrame(data_to_be_trained), direct, 'data_to_be_trained.xlsx')
 
         # Получение целевых значений
         df.dropna(inplace=True)  # Remove missing values.
@@ -76,21 +83,27 @@ for column in columns:
             random_state=settings[random_state]
         )
 
-        model = util.get_model_with_high_accuracy(direct, X_train, X_test, y_train, y_test)
+        model, method, score = util.get_model_with_high_accuracy(direct, X_train, X_test, y_train, y_test)
 
         last_date = df.index[-1]
         last_unix = datetime.datetime.strptime(last_date, "%Y.%m.%d").timestamp()
         one_day = 86400
         next_unix = last_unix + one_day
         forecast_set = model.predict(data_to_be_predicted)  # predicting forecast data
-        df['Forecast'] = np.nan
+        column_name = 'Forecast\nModel: ' + method + '\nScore: ' + str(int(round(score, 2) * 100)) + '%'
+        df[column_name] = np.nan
         for i in forecast_set:
             next_date = datetime.datetime.fromtimestamp(next_unix)
             next_unix += one_day
             df.loc[next_date] = [np.nan for _ in range(len(df.columns) - 1)] + [i]
 
-        df.plot(y=[column, 'Forecast'], figsize=(16, 8))
+        util.save_to_excel(df, direct, 'forecast.xlsx')
+        df.plot(y=[column, column_name], figsize=(16, 8))
         plt.legend(loc=4)
         plt.xlabel('Date')
         plt.ylabel('Price')
-        plt.show()
+
+        if save_picture:
+            plt.savefig(direct + 'pictures/forecast.png')
+        if settings[show_forecast]:
+            plt.show()

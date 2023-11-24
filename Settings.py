@@ -6,16 +6,20 @@ save_to_excel = 'save_to_excel'
 directory = 'dir'
 test_size = 'test_size'
 random_state = 'random_state'
+show_forecast = 'show_forecast'
+save_png = 'save_png'
 
 show_all_history = False
 
 settings = {
     'VTB': {
-        to_process: False,
+        to_process: True,
         save_to_excel: True,
         directory: 'втб/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 42
@@ -26,6 +30,8 @@ settings = {
         directory: 'доллар/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 50
@@ -36,6 +42,8 @@ settings = {
         directory: 'brent/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 43
@@ -46,6 +54,8 @@ settings = {
         directory: 'газпром/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 41
@@ -56,6 +66,8 @@ settings = {
         directory: 'лукойл/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: False,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 40
@@ -66,6 +78,8 @@ settings = {
         directory: 'роснефть/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 41
@@ -76,16 +90,20 @@ settings = {
         directory: 'сбербанк/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 42
     },
     'Сургутнефтегаз': {
-        to_process: True,
+        to_process: False,
         save_to_excel: True,
         directory: 'сургутнефтегаз/',
         need_show_sifted_figures: False,
         print_forecast_out: True,
+        show_forecast: True,
+        save_png: True,
         shift_percent: .01,
         test_size: .2,
         random_state: 44

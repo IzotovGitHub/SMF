@@ -61,7 +61,7 @@ def get_model_with_high_accuracy(directory: str, X_train, X_test, y_train, y_tes
             method = column
 
     save_to_excel(df, directory, 'models_score.xlsx')
-    return models[method]
+    return models[method], method, score
 
 
 def get_score(model, X_train, X_test, y_train, y_test):
@@ -73,3 +73,11 @@ def save_to_excel(df: DataFrame, directory: str, file_name: str):
     if not os.path.exists(directory):
         os.makedirs(directory)
     df.to_excel(directory + file_name, index=False)
+
+def save_picture(df: DataFrame, x_lable: str, directory: str, name: str):
+    d = directory + 'pictures/'
+    if not os.path.exists(d):
+        os.makedirs(d)
+    df.plot(figsize=(16, 8))
+    plt.xlabel(x_lable)
+    plt.savefig(d + name)
